@@ -10,9 +10,11 @@
 </head>
 <body>
 <h1>XMLHTTPREQUEST (XML)</h1>
-<p id="demo">AJAX ZAL HIER ALLES WIJZIGEN</p>
 
 
+<ul id="demo" class="list-group">
+
+</ul>
 
 <button class="btn btn-primary" type="button" onclick="loadDoc()">Wijzig content</button>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -23,12 +25,27 @@
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
                 xmlDoc = this.responseXML;
-                title = "";
-                x = xmlDoc.getElementsByTagName("title");
-                for(i=0;i < x.length;i++){
-                    title = title + x[i].childNodes[0].nodeValue + "<br>";
+                books = xmlDoc.getElementsByTagName("book");
+                console.log(books);
+                console.log(books.length);
+                console.log(books[0]);
+                console.log(books[0].children);
+                console.log(books[0].children[0]);
+                console.log(books[0].children[1]);
+                console.log(books[0].children[0].childNodes[0].nodeValue);
+                console.log(books[0].children[1].childNodes[0].nodeValue);
+                console.log(books[0].children.length);
+                txt = "";
+
+                for(i=0;i < books.length;i++){
+                    txt += "<li class='list-group-item m-2 bg-success text-white display-3'>";
+                    for(y=0;y < books[i].children.length; y++){
+                        txt += books[i].children[y].childNodes[0].nodeValue + "<br>";
+                    }
+                    document.getElementById("demo").innerHTML += txt + "</li>";
+                    txt = "";
                 }
-                document.getElementById("demo").innerHTML = txt;
+
             }
         }
         xhttp.open("GET","books.xml",true);
