@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+</head>
+<body>
+<h1>HARRY POTTER CHARACTERS</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Actor</th>
+        </tr>
+        </thead>
+        <tbody id="overzicht">
+
+        </tbody>
+    </table>
+
+
+<script crossorigin="anonymous"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function jsonLink() {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = onLoad;//methode die uiteindelijk het externe bestand zal laden.
+        xhr.open("GET", "http://hp-api.herokuapp.com/api/characters", true);
+        xhr.send(null); //null wordt verstuurd bij de request, omdat de status van de
+        //server en het json bestand in dit gedeelte van de programmatie hier NOG NIET GEKEND is.
+        function onLoad() {
+            const overzicht = document.getElementById("overzicht");
+         //   let card = document.createElement("div");
+         //   card.setAttribute('class','row');
+            let vullenData = "";
+            let naam = JSON.parse(this.responseText);
+            let count = JSON.parse(this.responseText).length;
+            let testImage;
+
+            for (i = 0; i < count; i++) {
+                if (naam[i]["name"] !== "") {
+                    if(naam[i]["image"] == ""){
+                        testImage = "https://via.placeholder.com/300";
+                    }else{
+                        testImage = naam[i]["image"];
+                    }
+                    vullenData += `<tr>
+                    <th scope="row">1</th>
+                    <td>${naam[i]["name"]}</td>
+                    <td>${naam[i]["actor"]}</td>
+                    `
+                }
+            }
+            document.getElementById("overzicht").innerHTML = vullenData;
+
+        }
+    }
+
+    window.addEventListener("load", jsonLink);
+</script>
+</body>
+</html>
