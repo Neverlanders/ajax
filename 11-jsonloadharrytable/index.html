@@ -16,6 +16,7 @@
         <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">Thumbnail</th>
             <th scope="col">Name</th>
             <th scope="col">Actor</th>
         </tr>
@@ -54,6 +55,7 @@
                     }
                     vullenData += `<tr>
                     <th scope="row">1</th>
+                    <td><a class="thumbnail" href="${naam[i]["image"]}"><img width="65" height="65"  src="${naam[i]["image"]}"/></a></td>
                     <td>${naam[i]["name"]}</td>
                     <td>${naam[i]["actor"]}</td>
                     `
