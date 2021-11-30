@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+<h1>JSON</h1>
+<div id="overzicht">
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+    function jsonLink(){
+        const xhr = new XMLHttpRequest();
+        xhr.onload = onLoad;//methode die uiteindelijk het externe bestand zal laden.
+        xhr.open("GET","https://www.dnd5eapi.co/api/monsters", true);
+        xhr.send(null); //null wordt verstuurd bij de request, omdat de status van de
+        //server en het json bestand in dit gedeelte van de programmatie hier NOG NIET GEKEND is.
+        function onLoad(){
+            const overzicht = document.getElementById("overzicht");
+            let ul = document.createElement("ul");
+            let naam = JSON.parse(this.responseText);
+            //doordat de functie onLoad verbonden is met het object xhr, hebben wij onmiddellijk
+            //toegang tot de data dmv JSON.parse(this.responseText); Het keyword this staat
+            //voor de onload() functie. parse zorgt ervoor dat de data als ARRAY OBJECT
+            //wordt binnengehaald
+            for(i=0; i < naam["count"];i++){
+                let li = document.createElement("li");
+                if(naam["results"][i]["name"] !== ""){
+                    li.innerHTML =
+                       // "<a href='https://www.dnd5eapi.co" + naam["results"][i]["url"] + "'>"+ naam["results"][i]["name"] + "</a>";
+                       `<a href="https://www.dnd5eapi.co${naam["results"][i]["url"]}">${naam["results"][i]["name"]}</a>`;
+                }else{
+                    li.innerHTML = naam["results"][i]["name"] ;
+                }
+                ul.appendChild(li);
+            }
+            overzicht.appendChild(ul);
+
+        }
+    }
+  window.addEventListener("load", jsonLink);
+</script>
+</body>
+</html>
